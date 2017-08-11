@@ -2,7 +2,7 @@
 
 August 2017, Markus Konrad <markus.konrad@wzb.eu> / [Wissenschaftszentrum Berlin für Sozialforschung](https://www.wzb.eu/en)
 
-## Ein Python-Modul zum Einlesen von Gemeindeverzeichnisdaten des Statistischen Bundesamts
+## Python-Modul zum Einlesen von Gemeindeverzeichnisdaten des Statistischen Bundesamts
 
 Die Gemeindeverzeichnisdaten werden als [pandas](http://pandas.pydata.org/) DataFrame zur weiteren Verarbeitung in Python eingelesen.
 

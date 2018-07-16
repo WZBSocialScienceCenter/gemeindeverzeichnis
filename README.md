@@ -1,12 +1,14 @@
 # Gemeindeverzeichnis
 
-August 2017, Markus Konrad <markus.konrad@wzb.eu> / [Wissenschaftszentrum Berlin für Sozialforschung](https://www.wzb.eu/en)
+Juli 2018, Markus Konrad <markus.konrad@wzb.eu> / [Wissenschaftszentrum Berlin für Sozialforschung](https://www.wzb.eu/en)
 
 ## Python-Modul zum Einlesen von Gemeindeverzeichnisdaten des Statistischen Bundesamts
 
 Die Gemeindeverzeichnisdaten werden als [pandas](http://pandas.pydata.org/) DataFrame zur weiteren Verarbeitung in Python eingelesen.
 
 Die Daten müssen als GV100 im ASCII-Format vorliegen. Download der Daten unter: https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html
+
+Standardmäßig wird automatisch der bis zu zwölfstellige Amtl. Regionalschlüssel (ARS) (Spalte `ars`) aus dem bis zu achtstelligem Amtl. Gemeindeschlüssel (AGS) erzeugt (Spalte `ags`).
 
 Für den Unterschied zw. Amtl. Gemeindeschlüssel (AGS) und Amtl. Regionalschlüssel (ARS) siehe
 https://de.wikipedia.org/wiki/Amtlicher_Gemeindeschl%C3%BCssel.

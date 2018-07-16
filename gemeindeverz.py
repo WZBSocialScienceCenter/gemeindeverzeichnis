@@ -69,7 +69,7 @@ SATZART = [art for art in range(10, 61, 10)]   # wird in string umgewandelt
 
 #%%
 
-def einlesen(datei, kodierung=None, satzart=None, bl_praefix_hinzufuegen=False, spalten_zu_int=True,
+def einlesen(datei, kodierung=None, satzart=None, bl_praefix_hinzufuegen=False, spalten_zu_int=False,
              ars_erzeugen=True):
     """
     Gemeindeverzeichnisdaten aus Datei `datei` einlesen. Daten müssen als GV100 im ASCII-Format vorliegen.
@@ -102,12 +102,22 @@ def einlesen(datei, kodierung=None, satzart=None, bl_praefix_hinzufuegen=False, 
     zeilen_buf.close()
 
     if ars_erzeugen:
-        maske_gemeinden = ~gem_vz.gemeinde_verb.isnull() & (gem_vz.satzart == 60)
+        maske_gemeinden = gem_vz.satzart == 60
         ags_land_rb_kreis = gem_vz.loc[maske_gemeinden, 'ags'].str.slice(0, 5)
         ags_gem = gem_vz.loc[maske_gemeinden, 'ags'].str.slice(-3)
         gem_vz['ars'] = ags_land_rb_kreis.str.cat(gem_vz.loc[maske_gemeinden, 'gemeinde_verb']).str.cat(ags_gem)
-        assert sum(~gem_vz.ars.isnull()) == len(ags_land_rb_kreis) == len(ags_gem)
-        assert set(gem_vz.loc[~gem_vz.ars.isnull(), 'ars'].str.len()) == {12}
+
+        maske_gemeinde_verb = gem_vz.satzart == 50
+        ags_gem_verb = gem_vz.loc[maske_gemeinde_verb, 'ags'].str.cat(gem_vz.loc[maske_gemeinde_verb, 'gemeinde_verb'])
+        gem_vz['ars'].update(ags_gem_verb)
+
+        maske_andere = ~gem_vz.satzart.isin((50, 60))
+        gem_vz['ars'].update(gem_vz.loc[maske_andere, 'ags'])
+
+        assert sum(gem_vz.ars.isnull()) == 0
+        assert set(gem_vz[maske_gemeinden].ars.str.len()) == {12}
+        assert set(gem_vz[maske_gemeinde_verb].ars.str.len()) == {9}
+        assert set(gem_vz[maske_andere].ars.str.len()) == {2, 3, 4, 5}
 
     if spalten_zu_int:
         for sp in spalten_zu_int:
@@ -146,7 +156,7 @@ def reg_schluessel_ermitteln(gem_vz, df, spalte_plz, spalte_ort, spalte_reg_schl
     """
     if not spalte_reg_schluessel:
         spalte_reg_schluessel = gem_vz_reg_schluessel
-    
+
     n_zeilen_initial = len(df)
     
     df = df.copy()

@@ -81,3 +81,7 @@ gemeindeverz.reg_schluessel_ermitteln(gemvz, orte, 'plz', 'ort')
 0  Raguhn-Jeßnitz  06779  15082301
 1          Brügge  24582  01058033
 ```
+
+## Lizenz / License
+
+Lizenziert unter [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). Siehe `LICENSE.txt`-Datei.
